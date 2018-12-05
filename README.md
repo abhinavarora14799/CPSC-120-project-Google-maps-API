@@ -157,7 +157,8 @@ Location: (33.8824, -117.885)
 The code provided to you takes care of converting a physical mailing address to its corresponding geolocations (coordinates) using the [Geocoding API](https://developers.google.com/maps/documentation/geocoding/start).
 
 In this project, you will do the following:
-* Add the functionality for [reverse geocoding](https://developers.google.com/maps/documentation/geocoding/start#reverse)
+* Allow user to input any address instead of using the hardcoded address.
+* Add the functionality for [reverse geocoding](https://developers.google.com/maps/documentation/geocoding/start#reverse).
 * Provide a menu for the user to select what action they want to take and accept the corresponding input.
 
 The program **must** look like this:
