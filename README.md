@@ -213,6 +213,8 @@ Enter an option: 0
 Bye!
 ```
 
+Note that if the user enters a valid option, the program should end once the corresponding output is displayed. It should not show the menu again unless the user inputted an invalid option.
+
 ## Extra credit
 
 *Note: if you do both extra credits, update the menu option numbers accordingly.*
@@ -258,9 +260,14 @@ Duration: 6 hours 2 mins
 
 For this project, you only need to modify the file `project.cpp`. There is no requirement on submitting a `README.md` file, nor a `ls.out` file.
 
-* Menu implemented: 20 points
+* Menu implemented: 10 points
+* Menu is displayed again if user enters invalid option: 10 points
 * Menu handles incorrect invalid input: 10 points
 * API key updated and "Convert an address to GPS coordinates" feature works: 20 points
 * "Convert GPS coordinates to an address" feature: 50 points
 
 Total: 100 points
+
+## Deadline
+
+Repositories will be graded with commits that were submitted **no later than Friday, December 21st, 2018 at 11:59:59pm PST**. Any commits pushed after that deadline will be ignored when grading the project.
