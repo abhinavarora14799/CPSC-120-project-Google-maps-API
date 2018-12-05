@@ -120,11 +120,13 @@ In the same way you use `using namespace std;` to avoid typing the prefix `std::
 using json = nlohmann::json;
 ```
 
-You will not have to write any code using this library as the code that handles the JSON objects are already provided to you.
+You will not have to write any code using this library as the code that handles the JSON objects is already provided to you.
 
 ## Instructions
 
-A file `project.cpp` has been provided to you. This file already have working code that calls the API. However, the first step for you to do is to update the API key with the one provided to you by your instructor.
+### Updating the API key and compiling the program
+
+A file `project.cpp` has been provided to you. This file already has working code that calls the API. However, the first step for you to do is to update the API key with the one provided to you by your instructor.
 
 Once the `API_KEY` variable has been updated, compile your code with the following command:
 
@@ -141,12 +143,16 @@ fatal error: curl/curl.h: No such file or directory
 compilation terminated.
 ```
 
+### Running the program
+
 Once the program compiles successfully, run the program. If the program works perfectly, it should print out the GPS coordinates of the university:
 
 ```
 $ ./project
 Location: (33.8824, -117.885)
 ```
+
+### Updating the program
 
 The code provided to you takes care of converting a physical mailing address to its corresponding geolocations (coordinates) using the [Geocoding API](https://developers.google.com/maps/documentation/geocoding/start).
 
