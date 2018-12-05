@@ -10,7 +10,7 @@ The objective of this project is to write a program that can talk to the Google 
 
 API stands for Application Programming Interface, and it is a topic you will learn in later computer science courses. In summary, an API is a software intermediary that allows two applications to talk to each other. In the industry, people refer to an API as the service provided by programs running in servers that can be called by any program, website, app, etc.
 
-In this project, you will be writing programs that talk to the Google Maps API which is hosted in Google's servers, and they can be called through the internet using HTTP requests.
+In this project, your program will talk to the Google Maps API which is hosted in Google's servers, and it can be called through the internet using HTTP requests.
 
 You can read more about [APIs](https://en.wikipedia.org/wiki/Application_programming_interface) and about [HTTP requests](https://www.codecademy.com/articles/http-requests).
 
@@ -41,7 +41,19 @@ string buildFormalName(string firstName, string lastName) {
 
 Now, let's imagine we want to do the opposite, and we want to take as an input the formal name (one single string), but return the first name and the last name as two separate strings. Because functions only allow you to return one value, one solution for this problem is to use an [`std::tuple`](https://en.cppreference.com/w/cpp/utility/tuple).
 
-A `tuple` is a fixed-sized collection of values. These values do not necessarily have to be of the same type (as it is in the case of an array). Here is an example of how to declare and use a tuple:
+A `tuple` is a fixed-sized collection of values. These values do not necessarily have to be of the same type (as it is in the case of an array). Here is how we would use a tuple to solve the problem above:
+
+```cpp
+std::tuple<std::string, std::string> getFirstAndLastName(std::string formal) {
+  int positionOfComma = formal.find(',');
+  std::string lastName = formal.substr(0,pos);
+  std::string firstName = formal.substr(pos+2);
+
+  return std::make_tuple(firstName,lastName);
+}
+```
+
+Here is another example of how to declare and use a tuple:
 
 ```cpp
 std::tuple<std::string, char, int> person = std::make_tuple("Luis", 'L', 27);
