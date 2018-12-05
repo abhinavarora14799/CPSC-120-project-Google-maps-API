@@ -46,8 +46,8 @@ A `tuple` is a fixed-sized collection of values. These values do not necessarily
 ```cpp
 std::tuple<std::string, std::string> getFirstAndLastName(std::string formal) {
   int positionOfComma = formal.find(',');
-  std::string lastName = formal.substr(0,pos);
-  std::string firstName = formal.substr(pos+2);
+  std::string lastName = formal.substr(0, positionOfComma);
+  std::string firstName = formal.substr(positionOfComma + 2);
 
   return std::make_tuple(firstName,lastName);
 }
