@@ -13,7 +13,7 @@ const string GEOCODE_API_URL = GOOGLE_MAPS_API_URL + "/geocode/";
 const string ELEVATION_API_URL = GOOGLE_MAPS_API_URL + "/elevation/";
 const string DISTRANCEMATRIX_API_URL = GOOGLE_MAPS_API_URL + "/distancematrix/";
 const string JSON_FORMAT = "json";
-const string API_KEY = "UPDATE_WITH_YOUR_API_KEY";
+const string API_KEY = "AIzaSyCWY0keoCiUkKWIPu7EuKSt_uK9fCjdvK0";
 
 /////////////////////////////////////
 // Functions for you to implement. //
@@ -131,12 +131,28 @@ size_t CurlWrite_CallbackFunc_StdString(
 ////////////////////////////////
 // End of functions provided. //
 ////////////////////////////////
-
+void displayMenu();
+int getchoice();
 
 int main() {
+int choice;
+string address = "";
+
   // These inputs below are hard-coded as an example. You will need to replace
   // them so that you ask the user of the program to input them instead.
-  string address = "800 N State College Blvd, Fullerton, CA 92831";
+cout << "[1] Convert an address to GPS coordinates" << endl;
+cout << "[2] Convert GPS coordinates to an address" << endl;
+cout << "[3] Get the elevation of a geolocation (GPS coordinates)" << endl;
+cout << "[0] Quit the program"<< endl;
+cout << "      "<< endl;
+cout << " Enter an option : ";
+cin >> choice;
+if (choice == 1){
+   cout << " Enter an address : ";
+   //cin >> address;
+   cin.ignore();
+   getline(std::cin,address);
+   //cout << "The address is: " << address << endl;
 
   // This is the URL that the program will call to contact the Google Maps API
   // server with the request.
@@ -183,10 +199,102 @@ int main() {
     cout << "There was an error initializing cURL" << endl;
     exit(1);
   }
+} else if(choice == 2){
+    string latitude, longitude;
+    cout << " Enter latitude : ";
+    cin.ignore();
+    getline(cin,latitude);
+    //cout<< "Latitude is: " << latitude <<endl;
+    cout << " Enter longitude : ";
+    //cin.ignore();
+    //getline(cin,longitude);
+    cin>>longitude;
+    //cout<< "Longitude is: " << longitude <<endl;
+    string latlang = latitude + "," + longitude;
+    //cout<< "Latlang is: "<< latlang << endl;
+    string url = buildReverseGeocodeRequestUrl(latlang);
+//cout << " url is " << url << endl;
+    CURL * curl;
+    CURLcode responseCode;
+    string reverseGeocodingResponseMessage,responseMessage;
+    curl = curl_easy_init();
 
-  return 0;
+    if (curl) {
+      curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+      // Set the function that will take care of handling the response from the
+      // HTTP call.
+      curl_easy_setopt(
+        curl, CURLOPT_WRITEFUNCTION, CurlWrite_CallbackFunc_StdString);
+      // Indicate the string where the response data will be stored.
+      curl_easy_setopt(curl, CURLOPT_WRITEDATA, & reverseGeocodingResponseMessage);
+
+      // Perform the call and store the response code.
+      responseCode = curl_easy_perform(curl);
+
+      // Check if the call was successful. If not, print out an error and quit the
+      // program.
+
+      curl_easy_cleanup(curl);
+      string location = getAddress(reverseGeocodingResponseMessage);
+      cout << "The Address is : " << location << endl;
+      if (responseCode != CURLE_OK) {
+        cout << "curl_easy_perform() failed: ";
+        cout << curl_easy_strerror(responseCode) << endl;
+        exit(1);
+      }
+    }
+
 }
+else if (choice == 3){
+  string la, lng;
+  cout << " Enter latitude : ";
+  cin.ignore();
+  getline(cin,la);
+  //cout<< "Latitude is: " << la <<endl;
+  cout << " Enter longitude : ";
+  cin>>lng;
+  //cout<< "Longitude is: " << lng <<endl;
+string locations = la + "," + lng;
+string url = buildElevationRequestUrl(locations);
+//cout << "url is " << url << endl;
+CURL * curl;
+CURLcode responseCode;
+string responseMessage;
+curl = curl_easy_init();
 
+if (curl) {
+  curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+  // Set the function that will take care of handling the response from the
+  // HTTP call.
+  curl_easy_setopt(
+    curl, CURLOPT_WRITEFUNCTION, CurlWrite_CallbackFunc_StdString);
+  // Indicate the string where the response data will be stored.
+  curl_easy_setopt(curl, CURLOPT_WRITEDATA, & responseMessage);
+
+  // Perform the call and store the response code.
+  responseCode = curl_easy_perform(curl);
+
+  // Check if the call was successful. If not, print out an error and quit the
+  // program.
+
+  curl_easy_cleanup(curl);
+}
+double elevation = getElevation(responseMessage);
+cout << " The Elevation is : " <<  elevation * 3.28 << " feet" << endl;
+if (responseCode != CURLE_OK) {
+  cout << "curl_easy_perform() failed: ";
+  cout << curl_easy_strerror(responseCode) << endl;
+  exit(1);
+}
+}
+else if (choice == 0){
+cout << " Bye !" << endl;
+}
+else {
+ cout << "That's an invalid option! Try again." << endl;
+}
+return 0;
+}
 string buildGeocodeRequestUrl(string address) {
   string url = GEOCODE_API_URL + JSON_FORMAT;
   url += "?address=" + formatAddressUrlSafe(address);
@@ -195,17 +303,20 @@ string buildGeocodeRequestUrl(string address) {
 }
 
 string buildReverseGeocodeRequestUrl(string latlng) {
-  // TODO(you): Implement for extra credit.
-  return "";
+  string url = GEOCODE_API_URL + JSON_FORMAT;
+  url += "?latlng=" + latlng;
+  url += "&key=" + API_KEY;
+  return url;
 }
 
-string buildElevationRequestUrl(string latlng) {
-  // TODO(you): Implement for extra credit.
-  return "";
+string buildElevationRequestUrl(string locations) {
+  string url = ELEVATION_API_URL + JSON_FORMAT;
+  url += "?locations=" + locations;
+  url += "&key=" + API_KEY;
+  return url;
 }
 
-string buildDistanceMatrixRequest(
-  string units, string origin, string destination) {
+string buildDistanceMatrixRequest(string units, string origin, string destination) {
     // TODO(you): Implement for extra credit.
     return "";
 }
