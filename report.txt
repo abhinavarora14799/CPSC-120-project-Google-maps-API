@@ -1,0 +1,10 @@
+- [+10] Menu implemented
+- [+0] Menu is displayed again if user enters invalid option
+- [+10] Menu handles incorrect invalid input
+- [+20] API key updated and "Convert an address to GPS coordinates" feature works
+- [+50] "Convert GPS coordinates to an address" feature
+- [+40] Elevation API extra credit
+- [+0] Distance Matrix API extra credit
+- [-5] project.cpp should not be moved to another folder.
+
+Total: 125
